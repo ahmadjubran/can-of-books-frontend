@@ -36,8 +36,8 @@ Clone the repo and run npm i to install all the dependencies.
 
     Estimate of time needed to complete: **1 hour**
 
-    Start time: **07:15 PM**
+    Start time: **07:45 PM**
 
-    Finish time: **\_**
+    Finish time: **09:20**
 
-    Actual time needed to complete: **\_**
+    Actual time needed to complete: **hour and a half**
