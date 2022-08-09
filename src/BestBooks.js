@@ -1,30 +1,59 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React from "react";
+import axios from "axios";
+import React, { Component, useEffect } from "react";
+import Carousel from "react-bootstrap/Carousel";
+
 import "./BestBooks.css";
 
-function BestBooks() {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+class BestBooks extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: [],
+    };
+  }
+  // const { isAuthenticated, loginWithRedirect } = useAuth0();
 
-  let books = [];
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
+  getBooks = async () => {
+    const url = `${process.env.REACT_APP_SERVER_URL}/books`;
+    const books = await axios.get(url);
+    this.setState({
+      books: books.data,
+    });
+  };
 
-  /* TODO: render all the books in a Carousel */
+  componentDidMount() {
+    this.getBooks();
+  }
 
-  return isAuthenticated ? (
-    <div className="books-box">
-      <h2>My Favorite Books</h2>
-      {books.length ? (
-        <p>Book Carousel coming soon</p>
-      ) : (
-        <p>No Books Found :(</p>
-      )}
-    </div>
-  ) : (
-    <div className="books-box">
-      <h2>Log in to see your favorite books</h2>
-      <button onClick={loginWithRedirect}>Log in</button>
-    </div>
-  );
+  render() {
+    /* TODO: render all the books in a Carousel */
+
+    // Use conditional logic to only render the books when there are more than 0 books stored in the application state.
+    // When the server does return some books, use a Bootstrap carousel to render all the books returned.
+    // When the server returns no books, then render a message that the book collection is empty.
+
+    return (
+      <div className="books-box">
+        <h1>My Favorite Books</h1>
+        <p>This is a collection of my favorite books</p>
+        {this.state.books.length > 0 ? (
+          <div>
+            {this.state.books.map((book) => (
+              <div key={book._id} className="books-box">
+                <h3>{book.title}</h3>
+                <p>{book.description}</p>
+                <p>{book.status}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>Book collection is empty</p>
+        )}
+      </div>
+    );
+  }
 }
 
 export default BestBooks;

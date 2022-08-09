@@ -23,6 +23,9 @@ function Header() {
         <Link to="/" className="nav-link">
           Home
         </Link>
+        <Link to="/about" className="nav-link">
+          About
+        </Link>
         {isAuthenticated && (
           <Link to="/profile" className="nav-link">
             Profile
